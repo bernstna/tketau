@@ -404,18 +404,11 @@ section{ position: relative; padding: 90px 24px; max-width: 1180px; margin: 0 au
 /* ================================================================
    BROTHERHOOD / OUTDOORS GALLERY
    ================================================================ */
-/* Fixed 6x4 grid at every viewport width — columns AND rows are all "fr"
-   (fractional/relative) units, and the whole grid has a locked overall
-   aspect-ratio. That means the collage always scales as one proportional
-   unit (like a photo shrinking) instead of reflowing into a different
-   layout on smaller screens. Gap uses clamp() so it shrinks gracefully
-   too instead of staying a fixed 18px on tiny phones. */
 .gallery-grid{
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: repeat(4, 1fr);
-  aspect-ratio: 3 / 2;
-  gap: clamp(6px, 1.6vw, 18px);
+  grid-auto-rows: 140px;
+  gap: 18px;
 }
 .gallery-grid .photo-frame{ width:100%; height:100%; }
 .gallery-grid .photo-frame .photo-box{ aspect-ratio: auto; height:100%; }
@@ -425,6 +418,11 @@ section{ position: relative; padding: 90px 24px; max-width: 1180px; margin: 0 au
 .g4{ grid-column: span 2; grid-row: span 2; }
 .g5{ grid-column: span 2; grid-row: span 2; }
 .g6{ grid-column: span 2; grid-row: span 2; }
+
+@media (max-width: 900px){
+  .gallery-grid{ grid-template-columns: repeat(2, 1fr); grid-auto-rows: 160px; }
+  .g1,.g2,.g3,.g4,.g5,.g6{ grid-column: span 1; grid-row: span 2; }
+}
 
 .gallery-note{
   text-align:center;
@@ -530,51 +528,6 @@ section{ position: relative; padding: 90px 24px; max-width: 1180px; margin: 0 au
 @media (max-width: 900px){
   .contact-wrap{ grid-template-columns: 1fr; }
   .index-card{ transform:none; }
-}
-
-/* --- RSVP / Google Form card, sits below the contact info --- */
-.rsvp-card{
-  margin-top: 50px;
-  background: var(--paper);
-  border: 1px solid var(--line);
-  border-radius: 2px;
-  padding: 34px 30px;
-  box-shadow: 0 12px 22px var(--shadow);
-  max-width: 640px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.rsvp-card h3{
-  font-family: var(--font-stamp);
-  font-size: 1.1rem;
-  text-transform: uppercase;
-  letter-spacing:.05em;
-  color: var(--cherry-dark);
-  margin-bottom: 8px;
-  text-align:center;
-}
-.rsvp-card p.rsvp-sub{
-  text-align:center;
-  color: var(--ink-soft);
-  font-size: .95rem;
-  margin: 0 0 20px 0;
-}
-.rsvp-card .gform-embed{
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  border-radius: 2px;
-  background: var(--paper-dim);
-}
-.rsvp-card .gform-embed iframe{
-  display:block;
-  width: 100%;
-  height: 640px;
-  border: 0;
-}
-@media (max-width: 640px){
-  .rsvp-card{ padding: 26px 18px; }
-  .rsvp-card .gform-embed iframe{ height: 720px; }
 }
 
 /* ================================================================
@@ -834,35 +787,6 @@ footer .stitch{
         </div>
         <p class="caption">#RUSHTKE</p>
       </div>
-    </div>
-  </div>
-
-  <!--
-    ============================================================
-    ✏️ RUSH RSVP — GOOGLE FORM SETUP (do this once)
-    ============================================================
-    This box embeds a real Google Form. To make it live:
-
-    1. Go to forms.google.com -> Blank form.
-    2. Give it 3 short questions:
-         - "Name"           (Short answer)
-         - "Phone Number"   (Short answer)
-         - "Which rush event are you interested in?"  (Multiple choice)
-             options: Spikeball Tourney / Lake Day / Top Golf
-             (update these 3 options any time you change rush events above)
-    3. Click "Send" (top right) -> the "<>" embed tab -> copy the
-       <iframe ...> code it gives you.
-    4. Replace the ENTIRE <iframe ...></iframe> line below with the one
-       Google gave you. Keep width="100%" so it stays responsive
-       (Google's default embed is a fixed pixel width — swap that out
-       for width="100%" and it'll behave like the rest of the site).
-    ============================================================
-  -->
-  <div class="rsvp-card reveal">
-    <h3>RSVP for Rush</h3>
-    <p class="rsvp-sub">Let us know you're coming — takes 10 seconds.</p>
-    <div class="gform-embed">
-      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdUxnsODEjL_FpP7LAxw44tA8KTUSK7iLb3J8AXsOFVHUQKXw/viewform?embedded=true" width="100%" height="640" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
     </div>
   </div>
 </section>
