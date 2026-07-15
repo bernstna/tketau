@@ -562,19 +562,25 @@ section{ position: relative; padding: 90px 24px; max-width: 1180px; margin: 0 au
 .rsvp-card .gform-embed{
   position: relative;
   width: 100%;
-  overflow: hidden;
   border-radius: 2px;
   background: var(--paper-dim);
 }
+/* Fixed height, no inner scrollbar. Google Forms is a cross-origin iframe,
+   so JS on our page can't measure its real content height and auto-fit it —
+   the only reliable option is a generous fixed height with scrolling
+   disabled. 780px comfortably fits a short 3-question form (Name, Phone
+   Number, multiple-choice event picker) with no clipping and no scrollbar.
+   If you add/remove questions later, just bump this number up or down —
+   both the iframe height below and the max-height in the media query. */
 .rsvp-card .gform-embed iframe{
   display:block;
   width: 100%;
-  height: 640px;
+  height: 1327px;
   border: 0;
 }
 @media (max-width: 640px){
   .rsvp-card{ padding: 26px 18px; }
-  .rsvp-card .gform-embed iframe{ height: 720px; }
+  .rsvp-card .gform-embed iframe{ height: 900px; } /* narrow screens wrap question text onto more lines, so the form runs a bit taller */
 }
 
 /* ================================================================
@@ -856,13 +862,19 @@ footer .stitch{
        Google gave you. Keep width="100%" so it stays responsive
        (Google's default embed is a fixed pixel width — swap that out
        for width="100%" and it'll behave like the rest of the site).
+       Also keep scrolling="no" and the height="780" (matching the CSS
+       above) so the form displays without its own inner scrollbar.
+       If your finished form is noticeably taller or shorter than 3
+       simple questions, adjust that height number (here + in the CSS
+       above) until there's no scrollbar and no big empty gap at the
+       bottom.
     ============================================================
   -->
   <div class="rsvp-card reveal">
     <h3>RSVP for Rush</h3>
     <p class="rsvp-sub">Let us know you're coming — takes 10 seconds.</p>
     <div class="gform-embed">
-      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdUxnsODEjL_FpP7LAxw44tA8KTUSK7iLb3J8AXsOFVHUQKXw/viewform?embedded=true" width="100%" height="640" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdUxnsODEjL_FpP7LAxw44tA8KTUSK7iLb3J8AXsOFVHUQKXw/viewform?embedded=true" width="100%" height="1327" frameborder="0" marginheight="0" marginwidth="0" scrolling="no">Loading…</iframe>
     </div>
   </div>
 </section>
