@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tau Kappa Epsilon — Tau Chapter | Oregon State University</title>
+
+<!--
+====================================================================
+  HOW TO EDIT THIS PAGE — read this first!
+====================================================================
+
+  1. PHOTOS (you said you'd add ~15-20 later)
+     Every photo slot below is an <img> tag pointing at a file inside
+     an "images" folder, e.g. src="images/01-hero-house.jpg"
+     -> Easiest way: create a folder called "images" next to this
+        file, and save your photos using the exact filenames already
+        written in the src="" attributes (01-hero-house.jpg, etc).
+     -> Or: just edit the src="..." to point at whatever your photo
+        is actually named. Either works.
+     Until a real photo is added, you'll see a friendly placeholder
+     box (camera icon + filename) instead of a broken image icon,
+     so the page always looks intentional while you're building it.
+
+  2. TEXT
+     Search this file for the marker  ✏️ EDIT
+     Every paragraph, event detail, and contact field you're likely
+     to want to change is flagged with it in a comment right above.
+
+  3. COLORS / FONTS
+     All colors and fonts are defined ONCE at the top of the <style>
+     block inside :root { ... }. Change a value there and it updates
+     everywhere on the page automatically.
+
+  4. SECTIONS
+     The page is one long scrollable HTML file, in this order:
+       NAV -> HERO -> ABOUT -> RUSH -> BROTHERHOOD/OUTDOORS GALLERY
+       -> PHILANTHROPY (St. Jude) -> CONTACT -> FOOTER
+     Each is wrapped in  ============ SECTION: ... ============
+     comments so you can jump around with your editor's search.
+
+====================================================================
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@500;600;700&family=Special+Elite&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<style>
+
+/* ================================================================
+   DESIGN TOKENS — edit colors & fonts here, they apply everywhere
+   ================================================================ */
+:root{
+  /* --- Colors --- */
+  --kraft:        #C8B99B;   /* outer corkboard/kraft-paper background */
+  --kraft-dark:   #B3A481;
+  --paper:        #FBF7EC;   /* photo mats, cards, paper backgrounds */
+  --paper-dim:    #F1EAD9;
+  --ink:          #2B2320;   /* primary text */
+  --ink-soft:     #5B4F45;   /* secondary text */
+  --cherry:       #9E1B32;   /* TKE red — ribbons, tape, buttons */
+  --cherry-dark:  #711526;
+  --teal:         #4C8B92;   /* washi-tape teal accent */
+  --teal-light:   #8FC0C4;
+  --gold:         #C79A2E;   /* St. Jude philanthropy accent */
+  --gold-soft:    #E7D19B;
+  --line:         rgba(43,35,32,0.16);
+  --shadow:       rgba(30,22,15,0.35);
+
+  /* --- Fonts ---
+     display = big headlines (varsity/bold)
+     hand    = handwritten captions & notes
+     stamp   = typewriter for dates/labels/stamps
+     body    = paragraph reading text                                */
+  --font-display: 'Anton', sans-serif;
+  --font-hand:    'Caveat', cursive;
+  --font-stamp:   'Special Elite', monospace;
+  --font-body:    'Libre Baskerville', Georgia, serif;
+}
+
+/* ================================================================
+   BASE / RESET
+   ================================================================ */
+*{ box-sizing: border-box; }
+html{ scroll-behavior: smooth; }
+body{
+  margin:0;
+  background:
+    radial-gradient(ellipse at top left, rgba(255,255,255,0.08), transparent 60%),
+    repeating-linear-gradient(45deg, rgba(0,0,0,0.015) 0px, rgba(0,0,0,0.015) 2px, transparent 2px, transparent 10px),
+    var(--kraft);
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+h1,h2,h3{ margin: 0; }
+img{ max-width:100%; display:block; }
+a{ color: inherit; }
+section{ position: relative; padding: 90px 24px; max-width: 1180px; margin: 0 auto; }
+
+::selection{ background: var(--gold-soft); color: var(--ink); }
+
+/* soft reveal-on-scroll (respects reduced motion) */
+.reveal{ opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+.reveal.in{ opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce){
+  .reveal{ opacity:1; transform:none; transition:none; }
+  html{ scroll-behavior:auto; }
+}
+
+/* ================================================================
+   SHARED COMPONENT: photo frames (polaroid / snapshot / taped print)
+   ================================================================ */
+.photo-frame{
+  --r: 0deg;
+  display:inline-block;
+  transform: rotate(var(--r));
+  filter: drop-shadow(0 10px 16px var(--shadow));
+  transition: transform .35s ease;
+}
+.photo-frame:hover{ transform: rotate(var(--r)) translateY(-4px) scale(1.02); z-index: 5; }
+
+.photo-frame.polaroid{
+  background: var(--paper);
+  padding: 14px 14px 0 14px;
+  border-radius: 2px;
+}
+.photo-frame.polaroid .photo-box{ aspect-ratio: 1/1; }
+.photo-frame.snapshot{
+  background: #fff;
+  padding: 8px;
+  border-radius: 1px;
+}
+.photo-frame.wide{
+  background: #fff;
+  padding: 8px;
+  border-radius: 1px;
+}
+.photo-frame.snapshot .photo-box{ aspect-ratio: 4/5; }
+.photo-frame.wide .photo-box{ aspect-ratio: 16/10; }
+
+.photo-box{
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: var(--paper-dim);
+}
+.photo-box img{
+  width:100%; height:100%; object-fit: cover; object-position: center;
+}
+.photo-placeholder{
+  position:absolute; inset:0;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
+  background:
+    repeating-linear-gradient(135deg, rgba(43,35,32,0.05) 0 10px, rgba(43,35,32,0.09) 10px 20px),
+    var(--paper-dim);
+  border: 1.5px dashed var(--line);
+  color: var(--ink-soft);
+  text-align:center;
+  padding: 10px;
+}
+.photo-placeholder .ph-icon{ font-size: 1.6rem; opacity:.6; }
+.photo-placeholder .ph-text{ font-family: var(--font-stamp); font-size: 0.62rem; letter-spacing:.03em; text-transform:uppercase; opacity:.75; }
+.photo-placeholder .ph-file{ font-family: var(--font-stamp); font-size: 0.58rem; opacity:.5; }
+
+.caption{
+  font-family: var(--font-hand);
+  font-size: 1.35rem;
+  color: var(--ink);
+  padding: 6px 4px 14px 4px;
+  text-align:center;
+  line-height:1.15;
+}
+.photo-frame.snapshot .caption{ display:none; } /* snapshots get a caption alongside them instead */
+
+/* washi tape strips used to "stick" photos down */
+.tape{
+  position:absolute;
+  width: 76px; height: 26px;
+  opacity: .88;
+  box-shadow: 0 1px 2px rgba(0,0,0,.15);
+  z-index: 2;
+}
+.tape.teal{ background: repeating-linear-gradient(45deg, var(--teal), var(--teal) 6px, var(--teal-light) 6px, var(--teal-light) 12px); }
+.tape.cherry{ background: repeating-linear-gradient(45deg, var(--cherry), var(--cherry) 6px, #c25a6c 6px, #c25a6c 12px); }
+.tape.top-left{ top:-12px; left:-18px; transform: rotate(-40deg); }
+.tape.top-right{ top:-12px; right:-18px; transform: rotate(40deg); }
+.tape.top-center{ top:-14px; left:50%; transform: translateX(-50%) rotate(-3deg); }
+
+/* push pin */
+.pin{
+  position:absolute; top:-9px; left:50%; transform: translateX(-50%);
+  width:16px; height:16px; border-radius:50%;
+  background: radial-gradient(circle at 35% 30%, #ff8e8e, var(--cherry-dark) 70%);
+  box-shadow: 0 3px 4px rgba(0,0,0,.4);
+  z-index: 3;
+}
+
+/* eyebrow / section labels styled like a rubber stamp */
+.stamp-label{
+  display:inline-block;
+  font-family: var(--font-stamp);
+  font-size: 0.85rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--cherry);
+  border: 2px solid var(--cherry);
+  padding: 4px 12px;
+  transform: rotate(-2deg);
+  border-radius: 3px;
+}
+
+.section-title{
+  font-family: var(--font-display);
+  font-size: clamp(2.1rem, 5vw, 3.4rem);
+  letter-spacing: .01em;
+  margin: 14px 0 28px 0;
+  color: var(--ink);
+}
+
+/* ================================================================
+   NAV — folder tabs pinned to the top
+   ================================================================ */
+.nav-wrap{
+  position: sticky; top:0; z-index: 50;
+  display:flex; justify-content:center;
+  padding-top: 10px;
+  pointer-events:none; /* only the tabs themselves are clickable */
+}
+.nav-tabs{
+  pointer-events:auto;
+  display:flex; gap:4px;
+  background: rgba(199,185,155,0.0);
+}
+.nav-tabs a{
+  font-family: var(--font-stamp);
+  font-size: .72rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  text-decoration:none;
+  color: var(--paper);
+  background: var(--ink);
+  padding: 10px 16px 8px 16px;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,.25);
+  transition: background .2s ease, transform .2s ease;
+}
+.nav-tabs a:hover{ background: var(--cherry-dark); transform: translateY(2px); }
+
+@media (max-width: 640px){
+  .nav-tabs{ flex-wrap: wrap; justify-content:center; max-width: 100%; }
+  .nav-tabs a{ font-size: .62rem; padding: 8px 10px 6px 10px; }
+}
+
+/* ================================================================
+   HERO
+   ================================================================ */
+.hero{
+  padding-top: 70px;
+  padding-bottom: 40px;
+  display:grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 40px;
+  align-items:center;
+}
+.hero-copy .stamp-label{ margin-bottom: 18px; }
+.hero-copy h1{
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 6vw, 4.6rem);
+  line-height: .96;
+  color: var(--ink);
+}
+.hero-copy h1 span{ color: var(--cherry); }
+.hero-copy .subhead{
+  font-family: var(--font-hand);
+  font-size: 1.7rem;
+  color: var(--ink-soft);
+  margin-top: 14px;
+}
+.hero-copy .tagline{
+  margin-top: 22px;
+  max-width: 46ch;
+  color: var(--ink-soft);
+}
+.hero-collage{
+  position: relative;
+  height: 460px;
+}
+.hero-collage .photo-frame{ position:absolute; }
+.hero-collage .p1{ width: 250px; top: 10px; left: 30px; --r: -6deg; z-index:2; }
+.hero-collage .p2{ width: 220px; top: 90px; right: 0; --r: 5deg; z-index:3; }
+.hero-collage .p3{ width: 210px; bottom: 0; left: 90px; --r: 4deg; z-index:4; }
+
+@media (max-width: 900px){
+  .hero{ grid-template-columns: 1fr; }
+  .hero-collage{ height: 380px; margin-top: 20px; }
+  .hero-collage .p1{ width: 180px; left: 0; }
+  .hero-collage .p2{ width: 160px; }
+  .hero-collage .p3{ width: 170px; left: 40px; }
+}
+
+/* ================================================================
+   ABOUT
+   ================================================================ */
+.about-wrap{
+  display:grid;
+  grid-template-columns: 1fr 1.3fr 1fr;
+  gap: 30px;
+  align-items:center;
+}
+.about-note{
+  background: var(--paper);
+  padding: 34px 32px;
+  border-radius: 2px;
+  box-shadow: 0 12px 24px var(--shadow);
+  position: relative;
+}
+.about-note::before{ /* torn-edge feel via a soft top border */
+  content:"";
+  position:absolute; top:-6px; left:12px; right:12px; height:12px;
+  background: repeating-linear-gradient(90deg, transparent 0 10px, rgba(43,35,32,.08) 10px 12px);
+}
+.about-note p{ font-size: 1.02rem; color: var(--ink); }
+.about-note p + p{ margin-top: 14px; }
+.about-note .signoff{ font-family: var(--font-hand); font-size: 1.4rem; color: var(--cherry-dark); margin-top: 18px; }
+
+.about-side{ display:flex; flex-direction:column; gap: 26px; align-items:center; }
+
+@media (max-width: 900px){
+  .about-wrap{ grid-template-columns: 1fr; }
+  .about-side{ flex-direction: row; justify-content:center; flex-wrap:wrap; }
+}
+
+/* ================================================================
+   RUSH EVENTS
+   ================================================================ */
+.rush-grid{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+.rush-card{
+  background: var(--paper);
+  border-radius: 2px;
+  padding: 20px 20px 26px 20px;
+  box-shadow: 0 10px 20px var(--shadow);
+  position: relative;
+  transform: rotate(var(--r, 0deg));
+}
+.rush-card .photo-frame{ width: 100%; margin-bottom: 6px; }
+.rush-card .photo-frame .photo-box{ aspect-ratio: 4/3; }
+.rush-card h3{
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--cherry-dark);
+  margin-top: 10px;
+}
+.rush-card .meta{
+  font-family: var(--font-stamp);
+  font-size: .82rem;
+  color: var(--ink-soft);
+  margin: 8px 0 10px 0;
+  line-height: 1.7;
+}
+.rush-card .meta b{ color: var(--ink); }
+.rush-card p.desc{ font-size: .95rem; color: var(--ink-soft); }
+
+@media (max-width: 900px){
+  .rush-grid{ grid-template-columns: 1fr; }
+  .rush-card{ transform: none !important; }
+}
+
+.rush-note{
+  text-align:center;
+  font-family: var(--font-hand);
+  font-size: 1.5rem;
+  color: var(--ink-soft);
+  margin-top: 26px;
+}
+
+/* ================================================================
+   BROTHERHOOD / OUTDOORS GALLERY
+   ================================================================ */
+.gallery-grid{
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-auto-rows: 140px;
+  gap: 18px;
+}
+.gallery-grid .photo-frame{ width:100%; height:100%; }
+.gallery-grid .photo-frame .photo-box{ aspect-ratio: auto; height:100%; }
+.g1{ grid-column: span 3; grid-row: span 2; }
+.g2{ grid-column: span 3; grid-row: span 1; }
+.g3{ grid-column: span 3; grid-row: span 1; }
+.g4{ grid-column: span 2; grid-row: span 2; }
+.g5{ grid-column: span 2; grid-row: span 2; }
+.g6{ grid-column: span 2; grid-row: span 2; }
+
+@media (max-width: 900px){
+  .gallery-grid{ grid-template-columns: repeat(2, 1fr); grid-auto-rows: 160px; }
+  .g1,.g2,.g3,.g4,.g5,.g6{ grid-column: span 1; grid-row: span 2; }
+}
+
+.gallery-note{
+  text-align:center;
+  font-family: var(--font-hand);
+  font-size: 1.5rem;
+  color: var(--ink-soft);
+  margin-top: 26px;
+}
+
+/* ================================================================
+   PHILANTHROPY — St. Jude patch
+   ================================================================ */
+.philan-wrap{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  align-items:center;
+  background: var(--paper);
+  border-radius: 4px;
+  padding: 50px;
+  box-shadow: 0 12px 26px var(--shadow);
+}
+.patch{
+  width: 500px; height: 220px;
+  margin: 0 auto;
+  border-radius: 50%;
+  border: 3px dashed var(--gold);
+  background: radial-gradient(circle at 50% 40%, #fff 0%, var(--gold-soft) 100%);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center;
+  position:relative;
+  box-shadow: inset 0 0 0 8px var(--paper), inset 0 0 0 9px var(--gold);
+}
+.patch .heart{ font-size: 2.4rem; margin-bottom: 6px; }
+.patch .p-title{ font-family: var(--font-display); font-size: 1rem; color: var(--cherry-dark); letter-spacing:.03em; }
+.patch .p-sub{ font-family: var(--font-stamp); font-size: .6rem; color: var(--ink-soft); margin-top: 4px; letter-spacing:.05em; }
+
+.philan-copy h2.section-title{ margin-bottom: 14px; }
+.philan-copy p{ color: var(--ink-soft); }
+.philan-copy p + p{ margin-top: 12px; }
+.philan-stats{
+  display:flex; gap: 30px; margin-top: 24px;
+}
+.philan-stats div{ text-align:center; }
+.philan-stats .num{ font-family: var(--font-display); font-size: 2.1rem; color: var(--gold); }
+.philan-stats .lbl{ font-family: var(--font-stamp); font-size: .68rem; text-transform:uppercase; color: var(--ink-soft); }
+
+.philan-photos{
+  display:flex; gap: 22px; justify-content:center; margin-top: 40px;
+}
+
+@media (max-width: 900px){
+  .philan-wrap{ grid-template-columns: 1fr; padding: 32px 22px; text-align:center; }
+  .philan-stats{ justify-content:center; }
+  .philan-photos{ flex-wrap:wrap; }
+}
+
+/* ================================================================
+   CONTACT — pinned index card
+   ================================================================ */
+.contact-wrap{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  align-items:center;
+}
+.index-card{
+  position: relative;
+  background:
+    repeating-linear-gradient(var(--paper) 0px, var(--paper) 27px, #d9c9b8 28px, var(--paper) 29px);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  padding: 34px 30px 30px 46px;
+  box-shadow: 0 12px 22px var(--shadow);
+  transform: rotate(-1.5deg);
+}
+.index-card::before{ /* red margin rule */
+  content:"";
+  position:absolute; left:26px; top:0; bottom:0; width:2px; background: var(--cherry);
+  opacity:.55;
+}
+.index-card h3{
+  font-family: var(--font-stamp);
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing:.05em;
+  color: var(--cherry-dark);
+  margin-bottom: 16px;
+}
+.index-card .contact-line{
+  font-family: var(--font-body);
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+.index-card .contact-line b{ font-family: var(--font-stamp); font-size:.72rem; text-transform:uppercase; display:block; color: var(--ink-soft); letter-spacing:.05em; margin-bottom:1px;}
+.index-card .contact-line a{ text-decoration: none; border-bottom: 1.5px solid var(--teal); }
+
+.contact-photo{ display:flex; justify-content:center; }
+
+@media (max-width: 900px){
+  .contact-wrap{ grid-template-columns: 1fr; }
+  .index-card{ transform:none; }
+}
+
+/* ================================================================
+   FOOTER
+   ================================================================ */
+footer{
+  text-align:center;
+  padding: 40px 24px 60px 24px;
+  color: var(--ink-soft);
+  font-family: var(--font-stamp);
+  font-size: .78rem;
+  letter-spacing:.04em;
+}
+footer .stitch{
+  width: 120px; height:1px; margin: 0 auto 18px auto;
+  border-top: 2px dashed var(--gold);
+}
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<div class="nav-wrap">
+  <nav class="nav-tabs">
+    <a href="#about">About</a>
+    <a href="#rush">Rush</a>
+    <a href="#brotherhood">Brotherhood</a>
+    <a href="#philanthropy">Philanthropy</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</div>
+
+<!-- ============ SECTION: HERO ============ -->
+<section class="hero">
+  <div class="hero-copy reveal">
+    <span class="stamp-label">Oregon State University</span>
+    <!-- ✏️ EDIT: main headline -->
+    <h1>TAU KAPPA<br><span>EPSILON</span></h1>
+    <p class="subhead">established in 1899</p>
+    <!-- ✏️ EDIT: tagline, 1-2 sentences that capture the house -->
+    <p class="tagline">"Better Men for a Better World" is the lifeblood of our fraternity, aiding men in their mental, moral, and social development for life. From presidents and CEOs to athletes and entertainers, Tau Kappa Epsilon has proudly shaped some of the most influential leaders of our time. Our members go on to make a meaningful impact in their fields, and it all starts with the values and experiences built through TKE.</p>
+  </div>
+  <div class="hero-collage reveal">
+    <div class="photo-frame polaroid p1">
+      <div class="tape teal top-left"></div>
+      <div class="photo-box">
+        <img src="images/jump.jpeg" alt="The house">
+
+      </div>
+      <p class="caption">Jump Day</p>
+    </div>
+    <div class="photo-frame polaroid p2">
+      <div class="tape cherry top-right"></div>
+      <div class="photo-box">
+        <img src="images/skiagain.jpeg" alt="Brothers together">
+      </div>
+      <p class="caption">Yearly Ski Retreat</p>
+    </div>
+    <div class="photo-frame polaroid p3">
+      <div class="tape teal top-center"></div>
+      <div class="photo-box">
+        <img src="images/goggles.jpeg" alt="A brotherhood trip outdoors">
+
+      </div>
+      <p class="caption">TKE Tundra</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION: ABOUT THE HOUSE ============ -->
+<section id="about">
+  <div class="stamp-label reveal">Who We Are</div>
+  <h2 class="section-title reveal">The Tau Chapter</h2>
+  <div class="about-wrap">
+
+    <div class="about-side reveal">
+      <div class="photo-frame snapshot" style="--r:-5deg;">
+        <div class="photo-box">
+          <img src="images/frontofline.jpeg" alt="House brothers hanging out">
+
+        </div>
+      </div>
+    </div>
+
+    <div class="about-note reveal">
+      <!-- ✏️ EDIT: About paragraph. Replace with your own chapter history / vibe. -->
+      <p>Founded in 1914, the Tau Chapter of Tau Kappa Epsilon has been shaping the lives of men for over a century. Success doesn't just come from a degree, it comes from the growth and connections made throughout your experience.</p>
+      <p>Whether you want to give back to St. Jude, hit the books during Sunday study sessions, join the executive leadership board, travel to national conferences, compete on the intramural field, or make lifelong memories at our brotherhood/function nights, we truly have something for everyone.</p>
+      <p>If you're looking for brothers who'll push to be a better man academically, socially, and physically, you're in the right place.</p>
+      <p class="signoff">— The Brothers of Tau Chapter</p>
+    </div>
+
+    <div class="about-side reveal">
+      <div class="photo-frame wide" style="--r:4deg;">
+        <div class="photo-box">
+          <img src="images/chistmasbrotherhood.jpeg" alt="Intramural sports game">
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ SECTION: RUSH EVENTS ============ -->
+<section id="rush">
+  <div class="stamp-label reveal">Meet the Brothers</div>
+  <h2 class="section-title reveal">Summer Rush</h2>
+
+  <div class="rush-grid">
+
+    <!-- ✏️ EDIT: Rush event 1 — details below -->
+    <div class="rush-card reveal" style="--r:-2deg;">
+      <div class="photo-frame">
+        <div class="photo-box">
+          <img src="images/tiki.jpeg" alt="Info night">
+        </div>
+      </div>
+      <h3>Spikeball Tourney</h3>
+      <div class="meta">
+        <b>Date:</b> July 18th<br>
+        <b>Time:</b> NOON<br>
+        <b>Location:</b> Somerset West Park, Portland OR
+      </div>
+      <p class="desc">Contacts: <br>Alec Morrison - 425-8765429,<br>Luke Werner - 503-914-7096</p>
+    </div>
+
+    <!-- ✏️ EDIT: Rush event 2 -->
+    <div class="rush-card reveal" style="--r:1.5deg;">
+      <div class="photo-frame">
+        <div class="photo-box">
+          <img src="images/river.jpeg" alt="BBQ and sports">
+
+        </div>
+      </div>
+      <h3>Lake Day</h3>
+      <div class="meta">
+        <b>Date:</b> August 1st<br>
+        <b>Time:</b> 11 AM<br>
+        <b>Location:</b> Dexter Reservoir, Eugene OR
+      </div>
+      <p class="desc">Contact: <br>Grayson Kassube - 541-653-7265</p>
+    </div>
+
+    <!-- ✏️ EDIT: Rush event 3 -->
+    <div class="rush-card reveal" style="--r:-1deg;">
+      <div class="photo-frame">
+        <div class="photo-box">
+          <img src="images/posed.jpeg" alt="Bid day">
+        </div>
+      </div>
+      <h3>Top Golf</h3>
+      <div class="meta">
+        <b>Date:</b> August 22nd<br>
+        <b>Time:</b> 5 PM<br>
+        <b>Location:</b> Hillsboro OR
+      </div>
+      <p class="desc">Contacts: <br>Alec Morrison - 425-8765429,<br>Luke Werner - 503-914-7096</p>
+    </div>
+    <p class="rush-note reveal"></p>
+    <p class="rush-note reveal">$1,000 TKE Scholarship Available - Reach out to Rush Chair/President/Rush Contacts for more information.</p>
+
+  </div>
+</section>
+
+<!-- ============ SECTION: BROTHERHOOD / OUTDOORS GALLERY ============ -->
+<section id="brotherhood">
+  <div class="stamp-label reveal">Brotherhood</div>
+  <h2 class="section-title reveal">Snapshots</h2>
+
+  <div class="gallery-grid">
+    <div class="photo-frame g1 reveal" style="--r:-1deg;">
+      <div class="photo-box"><img src="images/rcb.jpeg" alt="Softball game">
+      </div>
+    </div>
+    <div class="photo-frame g2 reveal" style="--r:1deg;">
+      <div class="photo-box"><img src="images/grads.jpeg" alt="Basketball intramurals">
+        </div>
+    </div>
+    <div class="photo-frame g3 reveal" style="--r:-0.5deg;">
+      <div class="photo-box"><img src="images/skiing2.jpeg" alt="Camping trip">
+        </div>
+    </div>
+    <div class="photo-frame g4 reveal" style="--r:2deg;">
+      <div class="photo-box"><img src="images/datedash.jpeg" alt="Hiking trip">
+      </div>
+    </div>
+    <div class="photo-frame g5 reveal" style="--r:-2deg;">
+      <div class="photo-box"><img src="images/collage.jpeg" alt="House formal or date event">
+      </div>
+    </div>
+    <div class="photo-frame g6 reveal" style="--r:1deg;">
+      <div class="photo-box"><img src="images/tkemania.jpeg" alt="Study room or house downtime">
+      </div>
+    </div>
+  </div>
+
+  <!-- ✏️ EDIT: gallery caption -->
+  <p class="gallery-note reveal">Tau Kappa Epsilon - The fraternity for life.</p>
+</section>
+
+<!-- ============ SECTION: PHILANTHROPY — ST. JUDE ============ -->
+<section id="philanthropy">
+  <div class="philan-wrap reveal">
+    <div class="patch-col">
+      <div class="patch">
+          <div class="photo-box"><img src="images/stjude.jpeg" alt="St. Jude fundraiser event">
+          </div>
+
+      </div>
+    </div>
+    <div class="philan-copy">
+      <div class="stamp-label">Philanthropy</div>
+      <h2 class="section-title">Founded by a TKE</h2>
+      <!-- ✏️ EDIT: philanthropy paragraph(s) -->
+      <p>Every year, Tau Chapter raises funds and awareness for St. Jude Children's Research Hospital, because families dealing with childhood cancer should never have to worry about a bill.</p>
+      <p>From our annual campus gala to the St. Jude Campus in Memphis, TN, to smaller fundraisers throughout the year, philanthropy is inseperable from our mission to create better men for a better world.</p>
+
+    </div>
+  </div>
+
+  <div class="philan-photos">
+    <div class="photo-frame snapshot reveal" style="--r:-4deg;">
+      <div class="photo-box"><img src="images/carwash.jpeg" alt="St. Jude fundraiser event">
+      </div>
+    </div>
+    <div class="photo-frame snapshot reveal" style="--r:3deg;">
+      <div class="photo-box"><img src="images/parkcleanup.jpeg" alt="St. Jude fundraiser event">
+      </div>
+    </div>
+    <div class="photo-frame snapshot reveal" style="--r:-2deg;">
+      <div class="photo-box"><img src="images/ironbrawl.jpeg" alt="St. Jude fundraiser event">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION: CONTACT ============ -->
+<section id="contact">
+  <div class="stamp-label reveal">Get In Touch</div>
+  <h2 class="section-title reveal">Interested in Rush?</h2>
+
+  <div class="contact-wrap">
+    <div class="index-card reveal">
+      <h3>Contact Us!</h3>
+      <!-- ✏️ EDIT: contact info — swap in real names / numbers -->
+      <div class="contact-line"><b>Rush Chairman</b>Lucas Chin — <a href="tel:+18582310295">(858) 231-0295</a></div>
+      <div class="contact-line"><b>Email</b><a href="mailto:osu.tke.president@gmail.com">osu.tke.president@gmail.com</a></div>
+      <div class="contact-line"><b>Instagram</b><a href="https://instagram.com/osutke" target="_blank" rel="noopener">@osutke</a></div>
+      <div class="contact-line"><b>House Address</b>1460 NW Van Buren Ave, Corvallis, OR 97330</div>
+    </div>
+    <div class="contact-photo reveal">
+      <div class="photo-frame polaroid" style="--r:3deg;">
+        <div class="tape cherry top-left"></div>
+        <div class="photo-box">
+          <img src="images/poster.jpeg" alt="Front of the house">
+        </div>
+        <p class="caption">#RUSHTKE</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="stitch"></div>
+  <!-- ✏️ EDIT: footer text -->
+  Tau Kappa Epsilon — Tau Chapter · Oregon State University · Corvallis, OR
+</footer>
+
+<script>
+  // Simple fade-in-on-scroll for elements marked .reveal
+  const items = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  items.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
