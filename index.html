@@ -270,6 +270,39 @@ section{ position: relative; padding: 90px 24px; max-width: 1180px; margin: 0 au
 }
 .nav-tabs a:hover{ background: var(--cherry-dark); transform: translateY(2px); }
 
+/* CTA button that jumps down to the rush RSVP form — shared style used
+   in the hero, the nav bar, and above the rush cards. */
+.cta-btn{
+  display: inline-block;
+  font-family: var(--font-stamp);
+  font-size: .8rem;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--paper);
+  background: var(--cherry);
+  padding: 13px 22px 11px 22px;
+  border-radius: 4px;
+  box-shadow: 0 6px 14px var(--shadow);
+  transition: background .2s ease, transform .2s ease;
+}
+.cta-btn:hover{ background: var(--cherry-dark); transform: translateY(-2px); }
+
+.hero-copy .cta-btn{ margin-top: 26px; }
+
+.nav-tabs a.cta-btn{
+  font-size: .72rem;
+  padding: 10px 16px 8px 16px;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,.25);
+}
+
+.rush-cta{ margin: -8px 0 32px 0; }
+
+@media (max-width: 640px){
+  .nav-tabs a.cta-btn{ font-size: .62rem; padding: 8px 10px 6px 10px; }
+}
+
 @media (max-width: 640px){
   .nav-tabs{ flex-wrap: wrap; justify-content:center; max-width: 100%; }
   .nav-tabs a{ font-size: .62rem; padding: 8px 10px 6px 10px; }
@@ -610,6 +643,7 @@ footer .stitch{
     <a href="#brotherhood">Brotherhood</a>
     <a href="#philanthropy">Philanthropy</a>
     <a href="#contact">Contact</a>
+    <a href="#rsvp-form" class="cta-btn">Click Here to Sign Up for Rush</a>
   </nav>
 </div>
 
@@ -622,6 +656,7 @@ footer .stitch{
     <p class="subhead">established in 1899</p>
     <!-- ✏️ EDIT: tagline, 1-2 sentences that capture the house -->
     <p class="tagline">"Better Men for a Better World" is the lifeblood of our fraternity, aiding men in their mental, moral, and social development for life. From presidents and CEOs to athletes and entertainers, Tau Kappa Epsilon has proudly shaped some of the most influential leaders of our time. Our members go on to make a meaningful impact in their fields, and it all starts with the values and experiences built through TKE.</p>
+    <a href="#rsvp-form" class="cta-btn">Click Here to Sign Up for Rush</a>
   </div>
   <div class="hero-collage reveal">
     <div class="photo-frame polaroid p1">
@@ -689,6 +724,7 @@ footer .stitch{
 <section id="rush">
   <div class="stamp-label reveal">Meet the Brothers</div>
   <h2 class="section-title reveal">Summer Rush</h2>
+  <a href="#rsvp-form" class="cta-btn rush-cta reveal">Click Here to Sign Up for Rush</a>
 
   <div class="rush-grid">
 
@@ -870,7 +906,7 @@ footer .stitch{
        bottom.
     ============================================================
   -->
-  <div class="rsvp-card reveal">
+  <div class="rsvp-card reveal" id="rsvp-form">
     <h3>RSVP for Rush</h3>
     <p class="rsvp-sub">Let us know you're interested!</p>
     <div class="gform-embed">
